@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29905.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codility Assignment 1486", "Codility Assignment 1486\Codility Assignment 1486.csproj", "{4B9CA85B-C68A-456B-86E5-C93257A5A925}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4B9CA85B-C68A-456B-86E5-C93257A5A925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B9CA85B-C68A-456B-86E5-C93257A5A925}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B9CA85B-C68A-456B-86E5-C93257A5A925}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B9CA85B-C68A-456B-86E5-C93257A5A925}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D75F0A41-4086-4531-8CA9-779F796A68B9}
+	EndGlobalSection
+EndGlobal
