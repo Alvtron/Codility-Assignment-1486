@@ -2,7 +2,7 @@
 
 namespace Codility_Assignment_1486
 {
-    class CalendarEvent : ICalendarEvent, IComparable
+    class CalendarEvent : ICalendarEvent
     {
         public TimeSpan StartTime { get; private set; }
         public TimeSpan EndTime { get; private set; }
