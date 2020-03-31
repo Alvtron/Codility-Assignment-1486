@@ -17,9 +17,10 @@ using System.IO;
  * 
  * Each meeting is stored as a Calendar Event with a start- and end time, then added to
  * a Schedule-object which stores the events in a binary search tree (self-balancing red-black
- * tree with O(log(n)) complexity). Each event inplements the IComparable interface.
+ * tree with O(log(n)) complexity). Each event implements the IComparable interface.
  * 
- * Then I iterate over all events from first to last and findt the largest interval.
+ * Then I iterate over all events from first to last and find the largest interval by subtracting
+ * the end time for the next event to the start time of the current event. 
  */
 
 namespace Codility_Assignment_1486
