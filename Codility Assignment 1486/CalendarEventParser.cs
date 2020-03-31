@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Codility_Assignment_1486
@@ -6,7 +8,7 @@ namespace Codility_Assignment_1486
     /// <summary>
     /// Parser for converting strings to CalendarEvent.
     /// </summary>
-    public class CalendarEventParser
+    public class CalendarEventParser<T> where T : ICalendarEvent
     {
         private string DayTimeMatchFormat { get; set; }
         private string TimeMatchFormat { get; set; }
@@ -89,8 +91,7 @@ namespace Codility_Assignment_1486
         private TimeSpan CreateTimeSpan(DayOfWeek dayOfWeek, int hours, int minutes)
         {
             var startTimeSpan = new TimeSpan(hours, minutes, seconds: 0);
-            startTimeSpan += TimeSpan.FromDays((int)dayOfWeek);
-            return startTimeSpan;
+            return startTimeSpan += TimeSpan.FromDays((int)dayOfWeek);
         }
 
         /// <summary>
@@ -99,22 +100,21 @@ namespace Codility_Assignment_1486
         /// <param name="input">The input string.</param>
         /// <returns>Calendar event meeting</returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public ICalendarEvent ParseMeeting(string input)
+        public T Parse(string input)
         {
             input = input ?? throw new ArgumentNullException();
-            // extract day and time interval with regex
+
             ExtractDayAndTimeInterval(input, out string day, out string timeInterval);
-            // convert day string to day of the week enum
             var dayOfWeek = ConvertStringToDayOfWeek(day);
-            // extract start- and end time with regex
+
             ExtractTime(timeInterval, out string startTime, out string endTime);
-            // extract hours and minutes
             ExtractHourAndMinutes(startTime, out int startHours, out int startMinutes);
             ExtractHourAndMinutes(endTime, out int endHours, out int endMinutes);
-            // create time spans
+
             var startTimeSpan = CreateTimeSpan(dayOfWeek, startHours, startMinutes);
             var endTimeSpan = CreateTimeSpan(dayOfWeek, endHours, endMinutes);
-            return new MeetingEvent(startTimeSpan, endTimeSpan);
+
+            return (T)Activator.CreateInstance(typeof(T), startTimeSpan, endTimeSpan);
         }
     }
 }

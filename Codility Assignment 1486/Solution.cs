@@ -16,13 +16,13 @@ namespace Codility_Assignment_1486
             const string DAY_TIME_MATCH_FORMAT = "^(.*?) (.*?)$"; // 'ddd time'
             const string TIME_MATCH_FORMAT = "^(.*?)-(.*?)$"; // 'start-end'
             const string HOUR_MINUTE_MATCH_FORMAT = "^(.*?):(.*?)$"; // 'hour:minute'
-            var calendarParser = new CalendarEventParser(DAY_TIME_MATCH_FORMAT, TIME_MATCH_FORMAT, HOUR_MINUTE_MATCH_FORMAT);
+            var calendarParser = new CalendarEventParser<MeetingEvent>(DAY_TIME_MATCH_FORMAT, TIME_MATCH_FORMAT, HOUR_MINUTE_MATCH_FORMAT);
             
             // create schedule
             var schedule = new Schedule();
             foreach (var entry in S.Split(Environment.NewLine))
             {
-                var meeting = calendarParser.ParseMeeting(entry);
+                var meeting = calendarParser.Parse(entry);
                 schedule.Add(meeting);
             }
 
