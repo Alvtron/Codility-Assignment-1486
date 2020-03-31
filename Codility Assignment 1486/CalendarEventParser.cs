@@ -89,7 +89,7 @@ namespace Codility_Assignment_1486
         private TimeSpan CreateTimeSpan(DayOfWeek dayOfWeek, int hours, int minutes)
         {
             var startTimeSpan = new TimeSpan(hours, minutes, seconds: 0);
-            startTimeSpan += TimeSpan.FromHours(24) * (int)dayOfWeek;
+            startTimeSpan += TimeSpan.FromDays((int)dayOfWeek);
             return startTimeSpan;
         }
 
