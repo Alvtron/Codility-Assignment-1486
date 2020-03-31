@@ -10,15 +10,19 @@ namespace Codility_Assignment_1486
     /// </summary>
     public class CalendarEventParser<T> where T : ICalendarEvent
     {
-        private string DayTimeMatchFormat { get; set; }
-        private string TimeMatchFormat { get; set; }
-        private string HoursMinutesMatchFormat { get; set; }
+        private const string KEYWORD_DAY = "day";
+        private const string KEYWORD_START_HOUR = "h1";
+        private const string KEYWORD_START_MINUTE = "m1";
+        private const string KEYWORD_START_SECONDS = "s1";
+        private const string KEYWORD_END_HOUR = "h2";
+        private const string KEYWORD_END_MINUTE = "m2";
+        private const string KEYWORD_END_SECONDS = "s2";
 
-        public CalendarEventParser(string dayTimeMatchFormat, string timeMatchFormat, string hoursMinutesMatchFormat)
+        private string MatchFormat { get; set; }
+
+        public CalendarEventParser(string matchFormat)
         {
-            DayTimeMatchFormat = dayTimeMatchFormat ?? throw new ArgumentNullException(nameof(dayTimeMatchFormat));
-            TimeMatchFormat = timeMatchFormat ?? throw new ArgumentNullException(nameof(timeMatchFormat));
-            HoursMinutesMatchFormat = hoursMinutesMatchFormat ?? throw new ArgumentNullException(nameof(hoursMinutesMatchFormat));
+            MatchFormat = matchFormat ?? throw new ArgumentNullException(nameof(matchFormat));
         }
 
         /// <summary>
@@ -40,57 +44,15 @@ namespace Codility_Assignment_1486
         }
 
         /// <summary>
-        /// Extracts the day and time interval with regex.
-        /// </summary>
-        /// <param name="input">The input.</param>
-        /// <param name="day">The day.</param>
-        /// <param name="time">The time interval.</param>
-        private void ExtractDayAndTimeInterval(string input, out string day, out string time)
-        {
-            var dayTimeRegex = new Regex(DayTimeMatchFormat);
-            var dayTimeMatch = dayTimeRegex.Match(input);
-            day = dayTimeMatch.Groups[1].Value;
-            time = dayTimeMatch.Groups[2].Value;
-        }
-
-        /// <summary>
-        /// Extracts the time interval.
-        /// </summary>
-        /// <param name="time">The time interval.</param>
-        /// <param name="startTime">The start time.</param>
-        /// <param name="endTime">The end time.</param>
-        private void ExtractTime(string timeInterval, out string startTime, out string endTime)
-        {
-            var timeRegex = new Regex(TimeMatchFormat);
-            var timeMatch = timeRegex.Match(timeInterval);
-            startTime = timeMatch.Groups[1].Value;
-            endTime = timeMatch.Groups[2].Value;
-        }
-
-        /// <summary>
-        /// Extracts the hours and minutes with regex.
-        /// </summary>
-        /// <param name="input">The input.</param>
-        /// <param name="hours">The hours.</param>
-        /// <param name="minutes">The minutes.</param>
-        private void ExtractHourAndMinutes(string input, out int hours, out int minutes)
-        {
-            var hourMinuteRegex = new Regex(HoursMinutesMatchFormat);
-            var startTimeMatch = hourMinuteRegex.Match(input);
-            hours = int.Parse(startTimeMatch.Groups[1].Value);
-            minutes = int.Parse(startTimeMatch.Groups[2].Value);
-        }
-
-        /// <summary>
         /// Creates the time span.
         /// </summary>
         /// <param name="dayOfWeek">The day of week.</param>
         /// <param name="hours">The hours.</param>
         /// <param name="minutes">The minutes.</param>
         /// <returns></returns>
-        private TimeSpan CreateTimeSpan(DayOfWeek dayOfWeek, int hours, int minutes)
+        private TimeSpan CreateTimeSpan(DayOfWeek dayOfWeek, int hours, int minutes, int seconds)
         {
-            var startTimeSpan = new TimeSpan(hours, minutes, seconds: 0);
+            var startTimeSpan = new TimeSpan(hours, minutes, seconds);
             return startTimeSpan += TimeSpan.FromDays((int)dayOfWeek);
         }
 
@@ -104,17 +66,34 @@ namespace Codility_Assignment_1486
         {
             input = input ?? throw new ArgumentNullException();
 
-            ExtractDayAndTimeInterval(input, out string day, out string timeInterval);
+            var regex = new Regex(MatchFormat);
+            var dayTimeMatch = regex.Match(input);
+
+            //exctract day
+            var day = GetMatchedValue<string>(dayTimeMatch.Groups, KEYWORD_DAY);
             var dayOfWeek = ConvertStringToDayOfWeek(day);
 
-            ExtractTime(timeInterval, out string startTime, out string endTime);
-            ExtractHourAndMinutes(startTime, out int startHours, out int startMinutes);
-            ExtractHourAndMinutes(endTime, out int endHours, out int endMinutes);
+            // extract time
+            var startHours = GetMatchedValue<int>(dayTimeMatch.Groups, KEYWORD_START_HOUR);
+            var startMinutes = GetMatchedValue<int>(dayTimeMatch.Groups, KEYWORD_START_MINUTE);
+            var startSeconds = GetMatchedValue<int>(dayTimeMatch.Groups, KEYWORD_START_SECONDS);
+            var endHours = GetMatchedValue<int>(dayTimeMatch.Groups, KEYWORD_END_HOUR);
+            var endMinutes = GetMatchedValue<int>(dayTimeMatch.Groups, KEYWORD_END_MINUTE);
+            var endSeconds = GetMatchedValue<int>(dayTimeMatch.Groups, KEYWORD_END_SECONDS);
 
-            var startTimeSpan = CreateTimeSpan(dayOfWeek, startHours, startMinutes);
-            var endTimeSpan = CreateTimeSpan(dayOfWeek, endHours, endMinutes);
+            var startTimeSpan = CreateTimeSpan(dayOfWeek, startHours, startMinutes, startSeconds);
+            var endTimeSpan = CreateTimeSpan(dayOfWeek, endHours, endMinutes, endSeconds);
 
             return (T)Activator.CreateInstance(typeof(T), startTimeSpan, endTimeSpan);
+        }
+
+        static F GetMatchedValue<F>(GroupCollection match, string key) where F : IConvertible
+        {
+            if (!match.TryGetValue(key, out var group))
+            {
+                return default;
+            }
+            return (F)Convert.ChangeType(group.Value, typeof(F));
         }
     }
 }
