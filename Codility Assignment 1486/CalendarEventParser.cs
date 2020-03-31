@@ -79,12 +79,12 @@ namespace Codility_Assignment_1486
         /// </summary>
         /// <param name="dayOfWeek">The day of week.</param>
         /// <param name="hours">The hours.</param>
-        /// <param name="minutes">The minutes.</param>
+        /// <param name="minutes">The minutes.</param>'
+        /// <param name="seconds">The seconds.</param>
         /// <returns></returns>
         private static TimeSpan CreateTimeSpan(DayOfWeek dayOfWeek, int hours, int minutes, int seconds)
         {
-            var startTimeSpan = new TimeSpan(hours, minutes, seconds);
-            return startTimeSpan += TimeSpan.FromDays((int)dayOfWeek);
+            return new TimeSpan((int)dayOfWeek, hours, minutes, seconds);
         }
 
         /// <summary>
