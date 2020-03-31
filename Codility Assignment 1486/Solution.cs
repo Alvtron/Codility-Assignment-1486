@@ -48,8 +48,8 @@ namespace Codility_Assignment_1486
                 // if last event, calculate duration between end time and midnight
                 if (counter == schedule.Events.Count) 
                 {
-                    var currentInterval = TimeSpan.FromHours(END_HOUR - (calendarEvent.EndTime.TotalHours % END_HOUR));
-                    largestInterval = currentInterval > largestInterval ? currentInterval : largestInterval;
+                    var intervalToMidnight = TimeSpan.FromHours(END_HOUR - (calendarEvent.EndTime.TotalHours % END_HOUR));
+                    largestInterval = intervalToMidnight > largestInterval ? intervalToMidnight : largestInterval;
                 }
                 // store current event for next iteration
                 lastMeeting = calendarEvent; 
