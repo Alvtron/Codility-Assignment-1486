@@ -36,19 +36,19 @@ namespace Codility_Assignment_1486
             input = input ?? throw new ArgumentNullException();
 
             var regex = new Regex(MatchFormat);
-            var dayTimeMatch = regex.Match(input);
+            var match = regex.Match(input);
 
             //exctract day
-            var day = GetMatchedValue<string>(dayTimeMatch.Groups, KEYWORD_DAY);
+            var day = GetMatchedValue<string>(match.Groups, KEYWORD_DAY);
             var dayOfWeek = ConvertStringToDayOfWeek(day);
 
             // extract time
-            var startHours = GetMatchedValue<int>(dayTimeMatch.Groups, KEYWORD_START_HOUR);
-            var startMinutes = GetMatchedValue<int>(dayTimeMatch.Groups, KEYWORD_START_MINUTE);
-            var startSeconds = GetMatchedValue<int>(dayTimeMatch.Groups, KEYWORD_START_SECONDS);
-            var endHours = GetMatchedValue<int>(dayTimeMatch.Groups, KEYWORD_END_HOUR);
-            var endMinutes = GetMatchedValue<int>(dayTimeMatch.Groups, KEYWORD_END_MINUTE);
-            var endSeconds = GetMatchedValue<int>(dayTimeMatch.Groups, KEYWORD_END_SECONDS);
+            var startHours = GetMatchedValue<int>(match.Groups, KEYWORD_START_HOUR);
+            var startMinutes = GetMatchedValue<int>(match.Groups, KEYWORD_START_MINUTE);
+            var startSeconds = GetMatchedValue<int>(match.Groups, KEYWORD_START_SECONDS);
+            var endHours = GetMatchedValue<int>(match.Groups, KEYWORD_END_HOUR);
+            var endMinutes = GetMatchedValue<int>(match.Groups, KEYWORD_END_MINUTE);
+            var endSeconds = GetMatchedValue<int>(match.Groups, KEYWORD_END_SECONDS);
 
             var startTimeSpan = CreateTimeSpan(dayOfWeek, startHours, startMinutes, startSeconds);
             var endTimeSpan = CreateTimeSpan(dayOfWeek, endHours, endMinutes, endSeconds);
