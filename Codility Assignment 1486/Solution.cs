@@ -4,7 +4,7 @@ namespace Codility_Assignment_1486
 {
     static class Solution
     {
-        private const int TOTAL_HOURS_IN_WEEK = 24 * 7;
+        private const int DAYS_IN_WEEK = 7;
 
         /// <summary>
         /// Given a string representing the schedule, returns the length of the longest time interval (in minutes) that is not occupied.
@@ -47,7 +47,7 @@ namespace Codility_Assignment_1486
                 // if last event, calculate duration between end time and midnight
                 if (counter == schedule.Events.Count)
                 {
-                    var intervalToMidnight = TimeSpan.FromHours(TOTAL_HOURS_IN_WEEK) - calendarEvent.EndTime;
+                    var intervalToMidnight = TimeSpan.FromDays(DAYS_IN_WEEK) - calendarEvent.EndTime;
                     largestInterval = intervalToMidnight > largestInterval ? intervalToMidnight : largestInterval;
                 }
                 // store current event for next iteration

@@ -37,6 +37,10 @@ namespace Codility_Assignment_1486
             var scheduleB = File.ReadAllText("schedule_b.txt");
             var schedulaBInterval = Solution.solution(scheduleB);
             Console.WriteLine($"Schedule B: James can sleep for {schedulaBInterval} minutes.");
+
+            var scheduleC = File.ReadAllText("schedule_c.txt");
+            var schedulaCInterval = Solution.solution(scheduleC);
+            Console.WriteLine($"Schedule C: James can sleep for {schedulaCInterval} minutes.");
         }
     }
 }

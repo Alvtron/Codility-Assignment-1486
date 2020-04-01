@@ -10,6 +10,9 @@
     <None Update="schedule_a.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="schedule_c.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="schedule_b.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
