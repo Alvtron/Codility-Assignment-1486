@@ -38,7 +38,7 @@ namespace Codility_Assignment_1486
             var regex = new Regex(MatchFormat);
             var match = regex.Match(input);
 
-            //exctract day
+            // exctract day
             var day = GetMatchedValue<string>(match.Groups, KEYWORD_DAY);
             var dayOfWeek = ConvertStringToDayOfWeek(day);
 

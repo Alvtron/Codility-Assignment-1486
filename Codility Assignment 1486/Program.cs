@@ -31,10 +31,12 @@ namespace Codility_Assignment_1486
         static void Main(string[] args)
         {
             var scheduleA = File.ReadAllText("schedule_a.txt");
-            Console.WriteLine($"Schedule A: James can sleep for {Solution.solution(scheduleA)} minutes.");
+            var schedulaAInterval = Solution.solution(scheduleA);
+            Console.WriteLine($"Schedule A: James can sleep for {schedulaAInterval} minutes.");
 
             var scheduleB = File.ReadAllText("schedule_b.txt");
-            Console.WriteLine($"Schedule B: James can sleep for {Solution.solution(scheduleB)} minutes.");
+            var schedulaBInterval = Solution.solution(scheduleB);
+            Console.WriteLine($"Schedule B: James can sleep for {schedulaBInterval} minutes.");
         }
     }
 }

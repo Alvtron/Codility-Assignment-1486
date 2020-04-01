@@ -4,8 +4,7 @@ namespace Codility_Assignment_1486
 {
     static class Solution
     {
-        private const int START_HOUR = 0;
-        private const int END_HOUR = 24;
+        private const int TOTAL_HOURS_IN_WEEK = 24 * 7;
 
         /// <summary>
         /// Given a string representing the schedule, returns the length of the longest time interval (in minutes) that is not occupied.
@@ -28,7 +27,7 @@ namespace Codility_Assignment_1486
             }
 
             // find highest break
-            var largestInterval = TimeSpan.FromHours(START_HOUR);
+            var largestInterval = TimeSpan.Zero;
             ICalendarEvent lastMeeting = null;
             var counter = 0;
             foreach (var calendarEvent in schedule.Events)
@@ -46,13 +45,13 @@ namespace Codility_Assignment_1486
                     largestInterval = currentInterval > largestInterval ? currentInterval : largestInterval;
                 }
                 // if last event, calculate duration between end time and midnight
-                if (counter == schedule.Events.Count) 
+                if (counter == schedule.Events.Count)
                 {
-                    var intervalToMidnight = TimeSpan.FromHours(END_HOUR - (calendarEvent.EndTime.TotalHours % END_HOUR));
+                    var intervalToMidnight = TimeSpan.FromHours(TOTAL_HOURS_IN_WEEK) - calendarEvent.EndTime;
                     largestInterval = intervalToMidnight > largestInterval ? intervalToMidnight : largestInterval;
                 }
                 // store current event for next iteration
-                lastMeeting = calendarEvent; 
+                lastMeeting = calendarEvent;
             }
             return (int)largestInterval.TotalMinutes;
         }
